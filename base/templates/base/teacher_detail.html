@@ -1,0 +1,21 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<h1>Teacher Page</h1>
+<hr>
+<div>
+  <p>{{ teacher.teacherName.last_name }} {{ teacher.teachername.first_name }}</p>
+  <p>{{ teacher.currentSchool }}</p>
+  <div>
+    {% for subject in teacher.subjects.all %}
+      {{ subject.subjectName }},
+    {% endfor %}
+  </div>
+  <p>{{ teacher.teacherName.email }}</p>
+</div>
+<form action="{% url 'base:confirmEnrolment' %}" method="get">
+  <input type="hidden" name='teacherId' value="{{ teacher.id }}">
+  <input type="submit" value="Enrol">
+</form>
+<hr>
+<p><a href="{% url 'base:teacherPage' %}">Back</a></p>
+{% endblock %}

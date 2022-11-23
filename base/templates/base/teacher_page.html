@@ -1,0 +1,29 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% if request.user.is_authenticated %}
+  <h2><a href="{% url 'base:logout' %}">Logout</a></h2>
+  <hr>
+{% else %}
+<h2><a href="{% url 'base:login' %}">Login</a></h2>
+<hr>
+{% endif %}
+<p><h2>Teachers on the site</h2></p>
+<hr>
+{% for teacher in teachers %}
+  <div>
+    <p>{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }} | {{ teacher.currentSchool }}</p>
+    <div>
+      {% for subject in teacher.subjects.all %}
+        {{ subject.subjectName }}, 
+        {% endfor %}
+        <p><a href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
+        {% if request.user.id == teacher.teacherName.id %}
+           | <a href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a></p>
+        {% endif %}
+    </div>
+    <hr>
+  </div>
+{% endfor %}
+<p>When you're ready, Upload your details <a href="{% url 'base:postTeacher' %}">Here</a></p><br>
+<p><a href="{% url 'base:index' %}">Back</a></p>
+{% endblock %}

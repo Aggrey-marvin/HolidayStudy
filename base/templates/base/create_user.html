@@ -1,0 +1,19 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<h1>Register user</h1>
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Create Account">
+  <p>Already have an account? Login <a href="{% url 'base:login' %}">Here</a></p>
+
+  <div>
+    {% if messages %}
+      {% for message in messages %}
+        <h5>{{ message }}</h5>
+      {% endfor %}
+    {% endif %}
+  </div>
+</form>
+
+{% endblock %}

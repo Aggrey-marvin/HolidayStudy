@@ -1,0 +1,26 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% if request.user.is_authenticated %}
+  <h2><a href="{% url 'base:logout' %}">Logout</a></h2>
+{% endif %}
+<h2>Students Using the site</h2>
+{% if students %}
+{% for student in students %}
+<hr>
+<div>
+  <p>{{ student.studentName.last_name }} {{ student.studentName.first_name }}</p>
+  <p>{{ student.currentSchool }} | {{ student.currentClass }}</p>
+  <p>
+    {% for subject in student.subjects.all %}
+    {{ subject.subjectName }},
+    {% endfor %}
+  </p>
+</div>
+<hr>
+{% endfor %}
+{% else %}
+<p>There are no students yet</p>
+{% endif %}
+<p><a href="{% url 'base:index' %}">Back</a> | <a href="{% url 'base:postStudent' %}">Register as Student</a> | 
+  <a href="{% url 'base:viewTeacher' %}">Teachers</a></p>
+{% endblock %}

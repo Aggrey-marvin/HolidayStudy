@@ -1,0 +1,6 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<h1>{{ request.user.id }}</h1>
+<h2>You are not registered student</h2>
+<p><a href="{% url 'base:postStudent' %}">Register as Student</a></p>
+{% endblock %}

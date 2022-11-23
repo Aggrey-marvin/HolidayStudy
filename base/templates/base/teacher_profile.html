@@ -1,0 +1,27 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<h1>Teacher Profile Page</h1>
+<hr>
+{% if request.user.is_authenticated %}
+  <h2><a href="{% url 'base:logout' %}">Logout</a></h2>
+  <hr>
+{% endif %}
+<div>
+  <p>Welcome {{ teacher.teacherName.last_name }}</p>
+  <hr>
+  <div>
+    <h2>Your Students</h2>
+    <hr>
+    {% for student in students %}
+      <p>
+        {{ student.student.studentName.last_name }} {{ student.student.studentName.first_name }} | {{ student.student.currentSchool }} | 
+        {% for subject in student.student.subjects.all %}
+          {{ subject.subjectName }}, 
+        {% endfor%}
+      </p>
+    {% endfor %}
+    <hr>
+  </div>
+</div>
+<p><a href="{% url 'base:teacherPage' %}">Back</a></p>
+{% endblock %}

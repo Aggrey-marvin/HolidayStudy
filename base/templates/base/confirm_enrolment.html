@@ -1,0 +1,9 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<h1>Enroll to: {{ teacher.teacherName.last_name }}</h1>
+<form action="" method='post'>
+  {% csrf_token %}
+  <input type="hidden" name="teacherId" value="{{ teacher.id }}">
+  <input type="submit" value="Confirm">
+</form>
+{% endblock %}
