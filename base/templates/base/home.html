@@ -1,10 +1,7 @@
+{% extends 'base_template.html' %}
+{% block content %}
 <h1>Home Page</h1>
 
-{% if request.user.is_authenticated %}
-<h2><a href="{% url 'base:logout' %}">Logout</a><h2>
-{% else %}
-<h2><a href="{% url 'base:login' %}">Login</a><h2>
-{% endif %}
-
-<p><a href="{% url 'base:studentPage' %}">Student Page</a></p>
-<p><a href="{% url 'base:teacherPage' %}">Teacher Page</a></p>
+<h3><a href="{% url 'base:studentPage' %}">Student Page</a></h3>
+<h3><a href="{% url 'base:teacherPage' %}">Teacher Page</a></h3>
+{% endblock %}

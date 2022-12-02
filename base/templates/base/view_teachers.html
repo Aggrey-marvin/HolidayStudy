@@ -1,12 +1,5 @@
 {% extends 'base_template.html' %}
 {% block content %}
-{% if request.user.is_authenticated %}
-  <h2><a href="{% url 'base:logout' %}">Logout</a></h2>
-  <hr>
-{% else %}
-<h2><a href="{% url 'base:login' %}">Login</a></h2>
-<hr>
-{% endif %}
 <p><h2>Teachers on the site</h2></p>
 <hr>
 {% for teacher in teachers %}
@@ -22,6 +15,7 @@
         {% endif %}
     </div>
     <hr>
+    <p><a href="{% url 'base:studentPage' %}">Back</a></p>
   </div>
 {% endfor %}
 {% endblock %}

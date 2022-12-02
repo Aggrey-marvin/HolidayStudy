@@ -1,0 +1,15 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<div class="container">
+  {% for subject in subjects %}
+  <div class="card col-sm m-2 p-2" style="width: 18rem;">
+    <img class="card-img-top" src="{{ subject.subjectImage.url }}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{ subject.subjectName }}</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary">View Teachers</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

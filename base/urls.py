@@ -11,18 +11,21 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('', views.index, name="index"),
     path('unauthorised/', views.unauthorisedUser, name="unauthorised"),
+    path('about/', views.aboutUs, name='about'),
     
     # Urls for student's views are below this
     path('studentPage', views.studentPage, name="studentPage"),
     path('postStudent', views.StudentCreateView.as_view(), name="postStudent"),
     path('viewTeachers', views.viewTeacher, name="viewTeacher"),
     path('confirmEnrolment', views.enrol, name="confirmEnrolment"),
-    path('notStudent', views.notStudent, name="notStudent"),
+    path('notStudent/', views.notStudent, name="notStudent"),
+    path('subjects/', views.viewSubjects, name="subjects"),
     
     # Urls for teacher's views are below this
     path('teacherPage', views.teacherPage, name="teacherPage"),
     path('postTeacher/', views.TeacherCreateView.as_view(), name="postTeacher"),
     path('teacherDetail/<pk>', views.TeacherDetailView.as_view(), name="teacherDetail"),
     path('teacherProfile/<pk>', views.teacherProfile, name="teacherProfile"),
+    path('notTeacher/', views.notTeacher, name="notTeacher"),
 ]
 

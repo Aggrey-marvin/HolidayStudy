@@ -1,29 +1,26 @@
 {% extends 'base_template.html' %}
 {% block content %}
-{% if request.user.is_authenticated %}
-  <h2><a href="{% url 'base:logout' %}">Logout</a></h2>
-  <hr>
-{% else %}
-<h2><a href="{% url 'base:login' %}">Login</a></h2>
-<hr>
-{% endif %}
 <p><h2>Teachers on the site</h2></p>
 <hr>
 {% for teacher in teachers %}
-  <div>
-    <p>{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }} | {{ teacher.currentSchool }}</p>
-    <div>
+  <div class="card col-sm m-2 p-2" style="width: 18rem;">
+    <img class="card-img-top" style="height: 300px;" src="{{ teacher.teacherImage.url }}" alt="{{ teacher.teacherName.last_name}}">
+    <h5 class="card-title">{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h5> {{ teacher.currentSchool }}</p>
+    <p class="card-text">
       {% for subject in teacher.subjects.all %}
         {{ subject.subjectName }}, 
         {% endfor %}
-        <p><a href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
+        <br>
+        <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
         {% if request.user.id == teacher.teacherName.id %}
-           | <a href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a></p>
+           <a class="btn btn-primary" href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a>
         {% endif %}
-    </div>
+      </p>
     <hr>
   </div>
 {% endfor %}
+{% if not isRegistered %}
 <p>When you're ready, Upload your details <a href="{% url 'base:postTeacher' %}">Here</a></p><br>
+{% endif %}
 <p><a href="{% url 'base:index' %}">Back</a></p>
 {% endblock %}

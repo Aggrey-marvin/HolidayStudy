@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignUpForm
-from . models import Teacher, Student, TeacherEnrolment
+from . models import Teacher, Student, Subject, TeacherEnrolment
 
 # Create your views here.
 
@@ -61,11 +61,26 @@ def logoutUser(request):
   return redirect('base:index')
 
 def index(request):
+  navbar = 'index'
   
-  return render(request, 'base/home.html')
+  context = {
+    'navbar': navbar,
+  }
+  return render(request, 'base/home.html', context)
+
+def aboutUs(request):
+  navbar = 'about'
+  
+  context = {
+    'navbar': navbar,
+  }
+  return render(request, 'base/about.html', context)
 
 # Student views are below here
 def studentPage(request):
+  # Check whether student is registered
+  isRegistered = Student.objects.filter(studentName=request.user.id)
+  
   isTeacher = Teacher.objects.filter(teacherName=request.user.id)
   if isTeacher:
     return redirect('base:notStudent')
@@ -73,7 +88,8 @@ def studentPage(request):
     students = Student.objects.all()
     
     context = {
-      'students': students
+      'students': students,
+      'isRegistered': isRegistered,
     }
     return render(request, 'base/student_page.html', context)
 
@@ -87,19 +103,35 @@ class StudentCreateView(CreateView):
     return super().form_valid(form)
   
   success_url = reverse_lazy('base:studentPage')
+  
+def viewSubjects(request):
+  navbar = 'subjects'
+  subjects = Subject.objects.all()
+  
+  context = {
+    'subjects': subjects,
+    'navbar': navbar,
+  }
+  return render(request, 'base/subjects_page.html', context)
 
 # Teacher views are from this point onwards
 def teacherPage(request):
+  isRegistered = Teacher.objects.filter(teacherName=request.user.id)
+  isStudent = Student.objects.filter(studentName=request.user.id)
+
+  if isStudent:
+    return redirect('base:notTeacher')
   teachers = Teacher.objects.all()
   
   context = {
-    'teachers': teachers
+    'teachers': teachers,
+    'isRegistered': isRegistered,
   }
   return render(request, 'base/teacher_page.html', context)
 
 class TeacherCreateView(CreateView):
   model = Teacher
-  fields = ['subjects', 'currentSchool']
+  fields = ['subjects', 'currentSchool', 'teacherImage']
   template_name = 'base/create_teacher.html'
   
   def form_valid(self, form):
@@ -125,10 +157,12 @@ def teacherProfile(request, pk):
   return render(request, 'base/teacher_profile.html', context)
   
 def viewTeacher(request):
+  navbar = 'viewTeacher'
   teachers = Teacher.objects.all()
   
   context = {
     'teachers': teachers,
+    'navbar': navbar,
   }
   return render(request, 'base/view_teachers.html', context)
 
@@ -142,6 +176,7 @@ def enrol(request):
     if request.method == 'POST':
       teacherId = request.POST['teacherId']
       teacher = Teacher.objects.get(id=teacherId)
+      student = Student.objects.get(studentName=currentUser.id)
       enrolment = TeacherEnrolment(teacher=teacher, student=student)
       enrolment.save()
       return redirect('base:viewTeacher')
@@ -160,3 +195,7 @@ def enrol(request):
 def notStudent(request):
   
   return render(request, 'base/not_student.html')
+
+def notTeacher(request):
+  
+  return render(request, 'base/not_teacher.html')
