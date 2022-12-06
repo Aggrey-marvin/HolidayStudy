@@ -20,6 +20,7 @@ class Student(models.Model):
   currentSchool = models.CharField(max_length=500)
   subjects = models.ManyToManyField(Subject, through='StudentSubject')
   currentClass = models.ForeignKey(CurrentClass, on_delete=models.CASCADE)
+  studentImage = models.ImageField(upload_to="photos/%y/%m/%d", blank=True)
   
   def __str__(self):
     return self.studentName.last_name
@@ -30,6 +31,8 @@ class Teacher(models.Model):
   students = models.ManyToManyField(Student, through='TeacherEnrolment')
   currentSchool = models.CharField(max_length=400)
   teacherImage = models.ImageField(upload_to="photos/%y/%m/%d", blank=True)
+  teacherDescription = models.TextField()
+  teacherFee = models.IntegerField()
   
   def __str__(self):
     return self.teacherName.last_name
@@ -48,3 +51,11 @@ class TeacherEnrolment(models.Model):
   
   class Meta:
     unique_together = [['teacher', 'student']]
+    
+class Testimonial(models.Model):
+  author = models.ForeignKey(User, on_delete=models.CASCADE)
+  message = models.TextField()
+  role = models.CharField(max_length=256)
+  
+  def __str__(self):
+    return self.author.username

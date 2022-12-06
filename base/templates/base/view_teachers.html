@@ -2,20 +2,24 @@
 {% block content %}
 <p><h2>Teachers on the site</h2></p>
 <hr>
-{% for teacher in teachers %}
-  <div>
-    <p>{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }} | {{ teacher.currentSchool }}</p>
-    <div>
-      {% for subject in teacher.subjects.all %}
-        {{ subject.subjectName }}, 
-        {% endfor %}
-        <p><a href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
-        {% if request.user.id == teacher.teacherName.id %}
-           | <a href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a></p>
-        {% endif %}
+<div class="row">
+  {% for teacher in teachers %}
+  <div class='col-sm'>
+    <div class="card m-2 p-2" style="width: 18rem;">
+      <img class="card-img-top" style="height: 300px;" src="{{ teacher.teacherImage.url }}" alt="{{ teacher.teacherName.last_name}}">
+      <h5 class="card-title">{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h5> {{ teacher.currentSchool }}</p>
+      <p class="card-text">
+        {% for subject in teacher.subjects.all %}
+          {{ subject.subjectName }}, 
+          {% endfor %}
+          <br>
+          <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
+          {% if request.user.id == teacher.teacherName.id %}
+             <a class="btn btn-primary" href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a>
+          {% endif %}
+        </p>
     </div>
-    <hr>
-    <p><a href="{% url 'base:studentPage' %}">Back</a></p>
   </div>
-{% endfor %}
+  {% endfor %}
+</div>
 {% endblock %}

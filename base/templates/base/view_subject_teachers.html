@@ -1,0 +1,14 @@
+{% extends 'base_template.html' %}
+{% block content %}
+<h2>Teacher of {{ subject }}
+{% for teacher in teachers %}
+<div class="card col-sm m-2 p-2" style="width: 18rem;">
+  <img class="card-img-top" style="height: 300px;" src="{{ teacher.teacher.teacherImage.url }}" alt="{{ teacher.teacherName.last_name}}">
+  <h5 class="card-title">{{ teacher.teacher.teacherName.last_name }} {{ teacher.teacher.teacherName.first_name }}</h5> {{ teacher.currentSchool }}</p>
+  <p class="card-text">
+      <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.teacher.id %}">View More</a>
+    </p>
+  <hr>
+</div>
+{% endfor %}
+{% endblock %}

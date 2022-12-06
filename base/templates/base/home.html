@@ -1,7 +1,67 @@
 {% extends 'base_template.html' %}
 {% block content %}
-<h1>Home Page</h1>
+<h2>Teachers</h2>
+<div class="row">
+  {% for teacher in teachers %}
+  <div class="col-sm">
+    <div class="card col-sm m-2 p-2" style="width: 18rem;">
+      <img class="card-img-top" style="height: 300px;" src="{{ teacher.teacherImage.url }}" alt="{{ teacher.teacherName.last_name}}">
+      <h5 class="card-title">{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h5> {{ teacher.currentSchool }}</p>
+      <p class="card-text">
+        {% for subject in teacher.subjects.all %}
+          {{ subject.subjectName }}, 
+          {% endfor %}
+          <br>
+          <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
+        </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<hr>
+<h2>Subjects</h2>
+<div class="row">
+  {% for subject in subjects %}
+  <div class="col-sm">
+    <div class="card col-sm m-2 p-2" style="width: 18rem;">
+      <img class="card-img-top" style="height: 250px;" src="{{ subject.subjectImage.url }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ subject.subjectName }}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="{% url 'base:viewSubjectTeachers' subject.id %}" class="btn btn-primary">View Teachers</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<hr>
+<h2>What Our Customers Say?</h2>
+<div class="row">
+  {% for testimonial in testimonials %}
+    <div class="col-sm card" style="margin: 10px; padding: 10px; border-radius: 10px;">
+      <div>
+        <p>{{ testimonial.message }}</p>
+      </div>
+      <p>{{ testimonial.author.first_name }}  
+        {% if testimonial.role == 'student' %}
+        | Student
+        {% elif testimonial.role == 'teacher'  %}
+        | Teacher
+        {% else %}
+        User
+        {% endif %}
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
-<h3><a href="{% url 'base:studentPage' %}">Student Page</a></h3>
-<h3><a href="{% url 'base:teacherPage' %}">Teacher Page</a></h3>
+{% if request.user.is_authenticated %}
+<div class="row">
+  <div class='col-sm'>
+    <a href="{% url 'base:addTestimonial' %}" style="width: 30%; border-radius: 5px;" class="btn btn-primary">Feedback</a>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}

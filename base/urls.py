@@ -12,6 +12,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('unauthorised/', views.unauthorisedUser, name="unauthorised"),
     path('about/', views.aboutUs, name='about'),
+    path('addTestimonial/', views.TestimonialCreateView.as_view(), name='addTestimonial'),
     
     # Urls for student's views are below this
     path('studentPage', views.studentPage, name="studentPage"),
@@ -20,6 +21,7 @@ urlpatterns = [
     path('confirmEnrolment', views.enrol, name="confirmEnrolment"),
     path('notStudent/', views.notStudent, name="notStudent"),
     path('subjects/', views.viewSubjects, name="subjects"),
+    path('subjects/viewSubjectTeachers/<int:id>/', views.viewSubjectTeachers, name='viewSubjectTeachers'),
     
     # Urls for teacher's views are below this
     path('teacherPage', views.teacherPage, name="teacherPage"),

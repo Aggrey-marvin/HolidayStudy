@@ -1,10 +1,13 @@
 {% extends 'base_template.html' %}
 {% block content %}
-<h1>Teacher Page</h1>
-<hr>
+<div class="container">
+  <img class="card-img-top" style="border-radius: 50%; height: 300px; width: 300px" src="{{ teacher.teacherImage.url }}" alt="Card image cap">
+<h1>{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h1>
 <div>
-  <p>{{ teacher.teacherName.last_name }} {{ teacher.teachername.first_name }}</p>
   <p>{{ teacher.currentSchool }}</p>
+  <div>
+    {{ teacher.teacherDescription}}
+  </div>
   <div>
     {% for subject in teacher.subjects.all %}
       {{ subject.subjectName }},
@@ -14,8 +17,9 @@
 </div>
 <form action="{% url 'base:confirmEnrolment' %}" method="get">
   <input type="hidden" name='teacherId' value="{{ teacher.id }}">
-  <input type="submit" value="Enrol">
+  <input type="submit" class="btn btn-primary" value="Enrol">
+  <br><br>
+  <p><a href="{% url 'base:teacherPage' %}" class="btn btn-primary">Back</a></p>
 </form>
-<hr>
-<p><a href="{% url 'base:teacherPage' %}">Back</a></p>
+</div>
 {% endblock %}

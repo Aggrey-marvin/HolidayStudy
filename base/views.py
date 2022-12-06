@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignUpForm
-from . models import Teacher, Student, Subject, TeacherEnrolment
+from . models import Teacher, Student, Subject, TeacherEnrolment, TeacherSubject, Testimonial
 
 # Create your views here.
 
@@ -62,9 +62,15 @@ def logoutUser(request):
 
 def index(request):
   navbar = 'index'
+  teachers = Teacher.objects.all()
+  subjects = Subject.objects.all()
+  testimonials = Testimonial.objects.all()
   
   context = {
     'navbar': navbar,
+    'teachers': teachers,
+    'subjects': subjects,
+    'testimonials': testimonials,
   }
   return render(request, 'base/home.html', context)
 
@@ -76,8 +82,31 @@ def aboutUs(request):
   }
   return render(request, 'base/about.html', context)
 
+class TestimonialCreateView(CreateView):
+  model = Testimonial
+  fields = ['message']
+  template_name = 'base/testimonial_create.html'
+  
+  def form_valid(self, form):
+    teacher = Teacher.objects.filter(teacherName=self.request.user.id)
+    student = Student.objects.filter(studentName=self.request.user.id)
+
+    if teacher:
+      role = 'teacher'
+    elif student:
+      role = 'student'
+    else:
+      role = 'user'
+
+    form.instance.author = self.request.user
+    form.instance.role = role
+    return super().form_valid(form)
+  
+  success_url = reverse_lazy('base:index')
+
 # Student views are below here
 def studentPage(request):
+  navbar = 'students'
   # Check whether student is registered
   isRegistered = Student.objects.filter(studentName=request.user.id)
   
@@ -90,6 +119,7 @@ def studentPage(request):
     context = {
       'students': students,
       'isRegistered': isRegistered,
+      'navbar': navbar,
     }
     return render(request, 'base/student_page.html', context)
 
@@ -104,6 +134,16 @@ class StudentCreateView(CreateView):
   
   success_url = reverse_lazy('base:studentPage')
   
+def viewSubjectTeachers(request, id):
+  subject = Subject.objects.get(pk=id)
+  teachers = TeacherSubject.objects.filter(subject=id)
+  
+  context = {
+    'teachers': teachers,
+    'subject': subject
+  }
+  return render(request, 'base/view_subject_teachers.html', context)
+
 def viewSubjects(request):
   navbar = 'subjects'
   subjects = Subject.objects.all()
@@ -116,6 +156,7 @@ def viewSubjects(request):
 
 # Teacher views are from this point onwards
 def teacherPage(request):
+  navbar = "viewTeacher"
   isRegistered = Teacher.objects.filter(teacherName=request.user.id)
   isStudent = Student.objects.filter(studentName=request.user.id)
 
@@ -126,6 +167,8 @@ def teacherPage(request):
   context = {
     'teachers': teachers,
     'isRegistered': isRegistered,
+    'isStudent': isStudent,
+    'navbar': navbar,
   }
   return render(request, 'base/teacher_page.html', context)
 

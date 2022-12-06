@@ -9,13 +9,18 @@
 {% if students %}
 {% for student in students %}
 <div>
-  <p>{{ student.studentName.last_name }} {{ student.studentName.first_name }}</p>
-  <p>{{ student.currentSchool }} | {{ student.currentClass }}</p>
-  <p>
-    {% for subject in student.subjects.all %}
-    {{ subject.subjectName }},
-    {% endfor %}
-  </p>
+  <div>
+    <img class="card-img-top" style="width: 250px; height: 250px; border-radius: 50%;" src="{{ student.studentImage.url }}" alt="Card image cap">
+  </div>
+  <div>
+    <p>{{ student.studentName.last_name }} {{ student.studentName.first_name }}</p>
+    <p>{{ student.currentSchool }} | {{ student.currentClass }}</p>
+    <p>
+      {% for subject in student.subjects.all %}
+      {{ subject.subjectName }},
+      {% endfor %}
+    </p>
+  </div>
 </div>
 <hr>
 {% endfor %}
