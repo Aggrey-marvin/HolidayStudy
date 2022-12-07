@@ -22,10 +22,13 @@
   </div>
   {% endfor %}
 </div>
-<div class="row">
-{% if not isRegistered %}
-<p>When you're ready, Upload your details <a href="{% url 'base:postTeacher' %}">Here</a></p><br>
+<hr>
+<div class="row" style="margin: 10px;">
+{% if not isRegistered and not isStudent %}
+<a href="{% url 'base:postTeacher' %}" style="width: 50%; margin: auto; border-radius: 5px;" class="btn btn-primary">Register As Teacher</a>
 {% endif %}
 </div>
-<p><a href="{% url 'base:index' %}">Back</a></p>
+<div class="row" style="margin: 10px;">
+<a href="{% url 'base:index' %}" style="width: 50%; margin: auto; border-radius: 5px;" class="btn btn-primary">Back</a>
+</div>
 {% endblock %}

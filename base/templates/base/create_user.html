@@ -1,11 +1,12 @@
 {% extends 'base_template.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="container m-3 p-3 mx-auto w-50" style="border: 1px solid #ccc;">
 <h1>Register user</h1>
 <form action="" method="post">
   {% csrf_token %}
-  {{ form | crispy }}
-  <input type="submit" value="Create Account">
+  {{ form.as_p }}
+  <input type="submit" class="btn btn-primary" value="Create Account">
   <p>Already have an account? Login <a href="{% url 'base:login' %}">Here</a></p>
 
   <div>
@@ -16,5 +17,5 @@
     {% endif %}
   </div>
 </form>
-
+</div>
 {% endblock %}

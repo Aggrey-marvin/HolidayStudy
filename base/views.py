@@ -125,7 +125,7 @@ def studentPage(request):
 
 class StudentCreateView(CreateView):
   model = Student
-  fields = ['currentSchool', 'subjects', 'currentClass']
+  fields = ['currentSchool', 'subjects', 'currentClass', 'studentImage']
   template_name = 'base/create_student.html'
   
   def form_valid(self, form):
@@ -160,8 +160,10 @@ def teacherPage(request):
   isRegistered = Teacher.objects.filter(teacherName=request.user.id)
   isStudent = Student.objects.filter(studentName=request.user.id)
 
-  if isStudent:
-    return redirect('base:notTeacher')
+  # The code belo was supposed to restrict a student from accessing the teacher page
+  # if isStudent:
+  #   return redirect('base:notTeacher')
+  
   teachers = Teacher.objects.all()
   
   context = {
@@ -174,7 +176,7 @@ def teacherPage(request):
 
 class TeacherCreateView(CreateView):
   model = Teacher
-  fields = ['subjects', 'currentSchool', 'teacherImage']
+  fields = ['subjects', 'currentSchool', 'teacherFee', 'teacherImage']
   template_name = 'base/create_teacher.html'
   
   def form_valid(self, form):
@@ -211,10 +213,14 @@ def viewTeacher(request):
 
 @login_required(login_url='base:login')
 def enrol(request): 
+  # Getting logged teacher
   teacherId = request.GET['teacherId']
+  
+  # Getting the student enroling
   currentUser = request.user
   student = Student.objects.filter(studentName=currentUser.id)
   
+  # Checking whether current user is actually a student.
   if student:
     if request.method == 'POST':
       teacherId = request.POST['teacherId']

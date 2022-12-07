@@ -1,25 +1,32 @@
 {% extends 'base_template.html' %}
 {% block content %}
-<div class="container">
+<div style="border: 1px #ccc solid" class="container m-3 p-3 mx-auto w-50 rounded-1" >
   <img class="card-img-top" style="border-radius: 50%; height: 300px; width: 300px" src="{{ teacher.teacherImage.url }}" alt="Card image cap">
 <h1>{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h1>
 <div>
-  <p>{{ teacher.currentSchool }}</p>
-  <div>
+  <h4>{{ teacher.currentSchool }}</h3>
+  <div class="container m-2 p-2">
     {{ teacher.teacherDescription}}
   </div>
   <div>
+    <h5>
     {% for subject in teacher.subjects.all %}
       {{ subject.subjectName }},
     {% endfor %}
+    </h5>
   </div>
   <p>{{ teacher.teacherName.email }}</p>
 </div>
 <form action="{% url 'base:confirmEnrolment' %}" method="get">
   <input type="hidden" name='teacherId' value="{{ teacher.id }}">
-  <input type="submit" class="btn btn-primary" value="Enrol">
-  <br><br>
-  <p><a href="{% url 'base:teacherPage' %}" class="btn btn-primary">Back</a></p>
+  <div class="row">
+    <div class="col-sm">
+      <input type="submit" class="btn btn-primary rounded-1" value="Enrol">
+    </div>
+    <div class="col-sm">
+      <a href="{% url 'base:teacherPage' %}" class="btn btn-primary rounded-1">Back</a>
+    </div>
+  </div>
 </form>
 </div>
 {% endblock %}

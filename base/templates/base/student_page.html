@@ -7,28 +7,36 @@
 <h2>Students Using the site</h2>
 <hr>
 {% if students %}
+<div class="row">
 {% for student in students %}
-<div>
-  <div>
+<div class="col-sm">
+  <div class="card p-3 m-3 rounded-1">
     <img class="card-img-top" style="width: 250px; height: 250px; border-radius: 50%;" src="{{ student.studentImage.url }}" alt="Card image cap">
-  </div>
-  <div>
-    <p>{{ student.studentName.last_name }} {{ student.studentName.first_name }}</p>
-    <p>{{ student.currentSchool }} | {{ student.currentClass }}</p>
-    <p>
-      {% for subject in student.subjects.all %}
-      {{ subject.subjectName }},
-      {% endfor %}
-    </p>
+    <div>
+      <p>{{ student.studentName.last_name }} {{ student.studentName.first_name }}</p>
+      <p>{{ student.currentSchool }} | {{ student.currentClass }}</p>
+      <p>
+        {% for subject in student.subjects.all %}
+        {{ subject.subjectName }},
+        {% endfor %}
+      </p>
+    </div>
   </div>
 </div>
-<hr>
-{% endfor %}
+  {% endfor %}
+</div>
 {% else %}
 <p>There are no students yet</p>
 {% endif %}
-<p><a href="{% url 'base:index' %}">Back</a>
+<hr>
+<div class="row m-3 p-3">
+  <div class="col-sm">
+    <a href="{% url 'base:index' %}" class="btn btn-primary rounded-1">Back</a>
+  </div>
+  <div class="col-sm">
   {% if not isRegistered %} 
-   | <a href="{% url 'base:postStudent' %}">Register as Student</a>
+   <a href="{% url 'base:postStudent' %}" class="btn btn-primary rounded-1">Register as Student</a>
   {% endif %}
+  </div>
+</div>
 {% endblock %}

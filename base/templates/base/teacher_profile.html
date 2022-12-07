@@ -1,14 +1,8 @@
 {% extends 'base_template.html' %}
 {% block content %}
-<h1>Teacher Profile Page</h1>
+<h1>Welcome {{ teacher.teacherName.last_name }}</h1>
 <hr>
-{% if request.user.is_authenticated %}
-  <h2><a href="{% url 'base:logout' %}">Logout</a></h2>
-  <hr>
-{% endif %}
 <div>
-  <p>Welcome {{ teacher.teacherName.last_name }}</p>
-  <hr>
   <div>
     <h2>Your Students</h2>
     <hr>
@@ -23,5 +17,9 @@
     <hr>
   </div>
 </div>
-<p><a href="{% url 'base:teacherPage' %}">Back</a></p>
+<div class="row p-3 m-3">
+<div class="col-sm">
+  <a href="{% url 'base:teacherPage' %}" class="btn btn-primary rounded-1">Back</a>
+</div>
+</div>
 {% endblock %}

@@ -71,7 +71,7 @@
             {% if request.user.is_authenticated %}
             <a href="{% url 'base:logout' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Logout</a>
             {% else %}
-            <a href="{% url 'base:login' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">SignUp</a>
+            <a href="{% url 'base:login' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login</a>
             {% endif %}
         </div>
     </nav>

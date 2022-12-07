@@ -3,7 +3,21 @@
 <h1>Enroll to: {{ teacher.teacherName.last_name }}</h1>
 <form action="" method='post'>
   {% csrf_token %}
+  {% comment %} I will continue fro here {% endcomment %}
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Select Subject</option>
+    {% for subject in teacher.subjects.all %}
+    <option value="1">One</option>
+    {% endfor %}
+  </select>
   <input type="hidden" name="teacherId" value="{{ teacher.id }}">
-  <input type="submit" value="Confirm">
+  <div class="row">
+    <div class="col-sm">
+      <input type="submit" class="btn btn-primary rounded-1" value="Confirm">
+    </div>
+    <div class="col-sm">
+      <a href="{% url 'base:teacherDetail' teacher.id %}" class="btn btn-primary rounded-1">Back</a>
+    </div>
+  </div>
 </form>
 {% endblock %}
