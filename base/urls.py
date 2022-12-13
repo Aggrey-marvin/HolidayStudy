@@ -22,6 +22,7 @@ urlpatterns = [
     path('notStudent/', views.notStudent, name="notStudent"),
     path('subjects/', views.viewSubjects, name="subjects"),
     path('subjects/viewSubjectTeachers/<int:id>/', views.viewSubjectTeachers, name='viewSubjectTeachers'),
+    path('wrongTeacher/', views.wrongTeacher, name='wrongTeacher'),
     
     # Urls for teacher's views are below this
     path('teacherPage', views.teacherPage, name="teacherPage"),

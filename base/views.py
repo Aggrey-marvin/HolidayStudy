@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignUpForm
-from . models import Teacher, Student, Subject, TeacherEnrolment, TeacherSubject, Testimonial
+from . models import Teacher, Student, Subject, StudentSubject, TeacherEnrolment, TeacherSubject, Testimonial
 
 # Create your views here.
 
@@ -222,13 +222,31 @@ def enrol(request):
   
   # Checking whether current user is actually a student.
   if student:
-    if request.method == 'POST':
-      teacherId = request.POST['teacherId']
-      teacher = Teacher.objects.get(id=teacherId)
-      student = Student.objects.get(studentName=currentUser.id)
-      enrolment = TeacherEnrolment(teacher=teacher, student=student)
-      enrolment.save()
-      return redirect('base:viewTeacher')
+    teacher = Teacher.objects.get(id=teacherId)
+    studentSubjects = StudentSubject.objects.all()
+    teacherSubjects = TeacherSubject.objects.all()
+    
+    # Varible to confirm whether a teacher teaches a particular subject
+    teaches = False
+    
+    for studentSubject in studentSubjects:
+      for teacherSubject in teacherSubjects:
+        if studentSubject.subject is teacherSubject.subject:
+          teaches = True
+          break
+      else:
+        continue
+      break
+      
+    if teaches:
+      if request.method == 'POST':
+        teacherId = request.POST['teacherId']
+        student = Student.objects.get(studentName=currentUser.id)
+        enrolment = TeacherEnrolment(teacher=teacher, student=student)
+        enrolment.save()
+        return redirect('base:viewTeacher')
+      else:
+        return redirect('base:wrongTeacher')
   else:
     return redirect('base:unauthorised')
   
@@ -240,6 +258,10 @@ def enrol(request):
   }
   
   return render(request, 'base/confirm_enrolment.html', context)
+
+def wrongTeacher(request):
+  
+  return render(request, 'base/wrong_teacher.html')
 
 def notStudent(request):
   

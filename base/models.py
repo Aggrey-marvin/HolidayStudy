@@ -48,6 +48,7 @@ class StudentSubject(models.Model):
 class TeacherEnrolment(models.Model):
   teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
   student = models.ForeignKey(Student, on_delete=models.CASCADE)
+  subjects = models.ManyToManyField(Subject, blank="True")
   
   class Meta:
     unique_together = [['teacher', 'student']]
