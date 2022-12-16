@@ -1,3 +1,4 @@
+import jsonfield
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -48,7 +49,7 @@ class StudentSubject(models.Model):
 class TeacherEnrolment(models.Model):
   teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
   student = models.ForeignKey(Student, on_delete=models.CASCADE)
-  subjects = models.ManyToManyField(Subject, blank="True")
+  subjects = jsonfield.JSONField()
   
   class Meta:
     unique_together = [['teacher', 'student']]

@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -195,6 +196,14 @@ def teacherProfile(request, pk):
   teacher = Teacher.objects.get(pk=pk)
   students = TeacherEnrolment.objects.filter(teacher=teacher.id)
   
+  subjects = []
+  
+  for student in students:
+    subjectsJson = student.subjects
+    subjectsList = json.dumps(subjectsJson)
+    
+    
+  print(subjects)
   context = {
     'teacher': teacher, 
     'students': students,
@@ -218,20 +227,20 @@ def enrol(request):
   
   # Getting the student enroling
   currentUser = request.user
-  student = Student.objects.filter(studentName=currentUser.id)
+  student = Student.objects.get(studentName=currentUser.id)
   
   # Checking whether current user is actually a student.
   if student:
     teacher = Teacher.objects.get(id=teacherId)
-    studentSubjects = StudentSubject.objects.all()
-    teacherSubjects = TeacherSubject.objects.all()
+    studentSubjects = student.subjects.all()
+    teacherSubjects = teacher.subjects.all()
     
     # Varible to confirm whether a teacher teaches a particular subject
     teaches = False
     
-    for studentSubject in studentSubjects:
-      for teacherSubject in teacherSubjects:
-        if studentSubject.subject is teacherSubject.subject:
+    for teacherSubject in teacherSubjects:
+      for studentSubject in studentSubjects:
+        if studentSubject == teacherSubject:
           teaches = True
           break
       else:
@@ -241,12 +250,14 @@ def enrol(request):
     if teaches:
       if request.method == 'POST':
         teacherId = request.POST['teacherId']
+        subjects = request.POST.getlist('checks[]')
+        subjectsJson = json.dumps(subjects)
         student = Student.objects.get(studentName=currentUser.id)
-        enrolment = TeacherEnrolment(teacher=teacher, student=student)
+        enrolment = TeacherEnrolment(teacher=teacher, student=student, subjects=subjectsJson)
         enrolment.save()
         return redirect('base:viewTeacher')
-      else:
-        return redirect('base:wrongTeacher')
+    else:
+      return redirect('base:wrongTeacher')
   else:
     return redirect('base:unauthorised')
   

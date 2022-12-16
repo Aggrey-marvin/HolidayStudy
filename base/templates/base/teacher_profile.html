@@ -1,25 +1,40 @@
 {% extends 'base_template.html' %}
 {% block content %}
+<div class="container" style="height: 80vh">
 <h1>Welcome {{ teacher.teacherName.last_name }}</h1>
-<hr>
 <div>
-  <div>
-    <h2>Your Students</h2>
-    <hr>
-    {% for student in students %}
-      <p>
-        {{ student.student.studentName.last_name }} {{ student.student.studentName.first_name }} | {{ student.student.currentSchool }} | 
-        {% for subject in student.student.subjects.all %}
-          {{ subject.subjectName }}, 
-        {% endfor%}
-      </p>
-    {% endfor %}
-    <hr>
+  <div class="container">
+    <h3>Your Students</h3>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">School</th>
+          <th scope="col">Subjects of Interest</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ student.student.studentName.last_name }} {{ student.student.studentName.first_name }}</td>
+          <td>{{ student.student.currentSchool }}</td>
+          <td>
+            {% comment %} {% for subject in subjects %}
+              {{ subject }}, 
+            {% endfor%} {% endcomment %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 <div class="row p-3 m-3">
 <div class="col-sm">
   <a href="{% url 'base:teacherPage' %}" class="btn btn-primary rounded-1">Back</a>
+</div>
 </div>
 </div>
 {% endblock %}
