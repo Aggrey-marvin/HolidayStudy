@@ -6,14 +6,16 @@
   <div class="col-sm">
     <div class="card col-sm m-2 p-2" style="width: 18rem;">
       <img class="card-img-top" style="height: 300px;" src="{{ teacher.teacherImage.url }}" alt="{{ teacher.teacherName.last_name}}">
-      <h5 class="card-title">{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h5> {{ teacher.currentSchool }}</p>
+      <h5 class="card-title">{{ teacher.teacherName.last_name }} {{ teacher.teacherName.first_name }}</h5> 
+      <p>{{ teacher.currentSchool }}</p>
       <p class="card-text">
         {% for subject in teacher.subjects.all %}
           {{ subject.subjectName }}, 
           {% endfor %}
           <br>
-          <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
         </p>
+        <h6 class="card-title">{{ teacher.teacherFee }}</h6>
+        <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
     </div>
   </div>
   {% endfor %}

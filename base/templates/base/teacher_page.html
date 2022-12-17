@@ -13,11 +13,19 @@
           {{ subject.subjectName }},
           {% endfor %}
           <br>
-          <a class="btn btn-primary" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
-          {% if request.user.id == teacher.teacherName.id %}
-             <a class="btn btn-primary" href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a>
-          {% endif %}
         </p>
+        <h6 class="card-title">{{ teacher.teacherFee }}</h6>
+        <div class="row">
+          <div class="col-sm">
+            <a class="btn btn-primary rounded-1" href="{% url 'base:teacherDetail' teacher.id %}">View More</a>
+          </div>
+          {% if request.user.id == teacher.teacherName.id %}
+          <div class="col-sm">
+            <a class="btn btn-primary rounded-1" href="{% url 'base:teacherProfile' teacher.id %}">My Profile</a>
+          </div>
+          {% endif %}
+
+        </div>
     </div>
   </div>
   {% endfor %}

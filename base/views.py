@@ -196,17 +196,22 @@ def teacherProfile(request, pk):
   teacher = Teacher.objects.get(pk=pk)
   students = TeacherEnrolment.objects.filter(teacher=teacher.id)
   
-  subjects = []
+  subjects = {}
   
   for student in students:
     subjectsJson = student.subjects
-    subjectsList = json.dumps(subjectsJson)
-    
+    subjectsList = json.loads(subjectsJson)
+    subs = []
+    for subject in subjectsList:
+      sub = Subject.objects.get(id=subject)
+      subs.append(sub.subjectName)
+    subjects[student.id] = subs
     
   print(subjects)
   context = {
     'teacher': teacher, 
     'students': students,
+    'subjects': subjects,
   }
   return render(request, 'base/teacher_profile.html', context)
   
