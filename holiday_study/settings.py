@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'holiday_study.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'holiday_study_app',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'holidayStudydb',
+        'USER': 'admin',
+        'PASSWORD': 'aggrey256',
+        'HOST': 'database-1.c8pp7yxbbdpt.ap-northeast-1.rds.amazonaws.com',
         'PORT': 3306,
     }
 }
