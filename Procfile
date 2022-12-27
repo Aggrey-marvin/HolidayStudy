@@ -1,1 +1,1 @@
-web: gunicorn holiday_study.wsgi --log-file -
+web: 'gunicorn holiday_study.wsgi'
