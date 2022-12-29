@@ -1,1 +1,0 @@
-web: gunicorn 'holiday_study.wsgi'
