@@ -1,11 +1,34 @@
 {% extends 'base_template.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container m-3 p-3 mx-auto w-50" style="border: 1px solid #ccc;">
+<div class="container m-3 p-4 mx-auto w-50 text-justify" style="border: 1px solid #ccc;">
 <h1>Register user</h1>
-<form action="" method="post">
+<form action="" method="post" class="mw-80">
   {% csrf_token %}
-  {{ form.as_p }}
+  <div class="fieldWrapper">
+    {{ form.first_name.label_tag }}<br>
+    {{ form.first_name }}
+  </div><br>
+  <div class="fieldWrapper">
+    {{ form.last_name.label_tag }}<br>
+    {{ form.last_name }}
+  </div><br>
+  <div class="fieldWrapper">
+    {{ form.username.label_tag }}<br>
+    {{ form.username }}
+  </div><br>
+  <div class="fieldWrapper">
+    {{ form.email.label_tag }}<br>
+    {{ form.email }}
+  </div><br>
+  <div class="fieldWrapper">
+    {{ form.password1.label_tag }}<br>
+    {{ form.password1 }}
+  </div><br>
+  <div class="fieldWrapper">
+    {{ form.password2.label_tag }}<br>
+    {{ form.password2 }}
+  </div><br>
   <input type="submit" class="btn btn-primary" value="Create Account">
   <p>Already have an account? Login <a href="{% url 'base:login' %}">Here</a></p>
 

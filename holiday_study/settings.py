@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vj&a&2tc)zdl93%=xsk9+od0p$%mxp=gz6qhs)_gr@9&mbbi_w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -78,16 +78,29 @@ WSGI_APPLICATION = 'holiday_study.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# --------------------------------------DEPLOYMENTS DATABASE------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'holidayStudydb',
         'USER': 'admin',
         'PASSWORD': 'aggrey256',
-        'HOST': 'database-1.c8pp7yxbbdpt.ap-northeast-1.rds.amazonaws.com',
+        'HOST': 'holidaystudydb.c8pp7yxbbdpt.ap-northeast-1.rds.amazonaws.com',
         'PORT': 3306,
     }
 }
+
+# ------------------------------------------TEST DATABASE ---------------------------------------
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'holiday_study_localhost',
+#         'USER': 'root',
+#         'PASSWORD': 'marvin',
+#         'HOST': 'localhost',
+#         'PORT': 3306,
+#     }
+# }
 
 
 # Password validation
@@ -125,10 +138,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '/static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

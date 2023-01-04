@@ -1,5 +1,6 @@
 {% extends 'base_template.html' %}
 {% block content %}
+<div class="container" style="height: 80vh;">
 <p><h2>Teachers on the site</h2></p>
 <hr>
 <div class="row">
@@ -38,5 +39,6 @@
 </div>
 <div class="row" style="margin: 10px;">
 <a href="{% url 'base:index' %}" style="width: 50%; margin: auto; border-radius: 5px;" class="btn btn-primary">Back</a>
+</div>
 </div>
 {% endblock %}
