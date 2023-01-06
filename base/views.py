@@ -1,4 +1,4 @@
-import json
+# import json
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -196,22 +196,9 @@ def teacherProfile(request, pk):
   teacher = Teacher.objects.get(pk=pk)
   students = TeacherEnrolment.objects.filter(teacher=teacher.id)
   
-  subjects = {}
-  
-  for student in students:
-    subjectsJson = student.subjects
-    subjectsList = json.loads(subjectsJson)
-    subs = []
-    for subject in subjectsList:
-      sub = Subject.objects.get(id=subject)
-      subs.append(sub.subjectName)
-    subjects[student.id] = subs
-    
-  print(subjects)
   context = {
     'teacher': teacher, 
     'students': students,
-    'subjects': subjects,
   }
   return render(request, 'base/teacher_profile.html', context)
   
@@ -256,10 +243,14 @@ def enrol(request):
       if request.method == 'POST':
         teacherId = request.POST['teacherId']
         subjects = request.POST.getlist('checks[]')
-        subjectsJson = json.dumps(subjects)
         student = Student.objects.get(studentName=currentUser.id)
-        enrolment = TeacherEnrolment(teacher=teacher, student=student, subjects=subjectsJson)
+        enrolment = TeacherEnrolment.objects.create(teacher=teacher, student=student)
         enrolment.save()
+        
+        # saving the subjects enrolled for by a student
+        for subject in subjects:
+          enrolment.subjects.add(*Subject.objects.filter(id=subject))
+        
         return redirect('base:viewTeacher')
     else:
       return redirect('base:wrongTeacher')

@@ -21,13 +21,9 @@
           <td>{{ student.student.studentName.last_name }} {{ student.student.studentName.first_name }}</td>
           <td>{{ student.student.currentSchool }}</td>
           <td>
-            {% for key, subjects in subjects.items %}
-              {% if student.id == key %}
-                {% for subject in subjects %}
-                  {{ subject }}, 
-                {% endfor %}
-              {% endif %}
-            {% endfor%}
+            {% for subject in student.subjects.all %}
+              {{ subject }},
+            {% endfor %}
           </td>
         </tr>
         {% endfor %}
