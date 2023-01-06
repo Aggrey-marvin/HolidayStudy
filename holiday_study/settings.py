@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'holiday_study.wsgi.application'
 # --------------------------------------DEPLOYMENTS DATABASE------------------------------------
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        # 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'holidayStudydb',
         'USER': 'admin',
         'PASSWORD': 'aggrey256',
