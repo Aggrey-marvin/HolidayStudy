@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,14 +84,7 @@ WSGI_APPLICATION = 'holiday_study.wsgi.application'
 
 # --------------------------------------DEPLOYMENTS DATABASE------------------------------------
 DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'holiday_study_app',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': 3306,
-    }
+    'default': dj_database_url.config(default="postgresql://postgres:jW0Wmm73NaDW2AmIkjjm@containers-us-west-32.railway.app:7688/railway", conn_max_age=1800)
 }
 
 # ------------------------------------------TEST DATABASE ---------------------------------------
